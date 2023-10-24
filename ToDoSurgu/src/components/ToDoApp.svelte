@@ -1,32 +1,32 @@
 <script>
+	import { onMount } from "svelte";
     import ToDoControls from "./ToDoControls.svelte";
     import ToDoItem from "./ToDoItem.svelte";
-    let items=[
-        {
-            id:1,
-            text: 'some_todo_1',
-            isDone: false
-        },
-        {   id:2,
-            text: 'some_todo_2',
-            isDone: true
-        }
-    ];
+
+    let items=[];
     let id=0;
-    if(items.length){
+
+     onMount(()=>{
+        if(localStorage.key('items')){
+            items=JSON.parse(localStorage.getItem('items'));
+        }
+        if(items.length){
         items.forEach((i)=>{
             if(id<i.id){
-                id=i.id;
+                id=i.id; 
             }
         });
         id++;
-    }
+    } 
+   });
+    
     function onChangeStatus(event){ 
 
         const item=items.find((i)=>i.id===event.detail.id);
         console.log(event.detail.id)
         item.isDone=!item.isDone;
         items=items;
+        localStorage.setItem('items',JSON.stringify(items));
     }
     function onAddItem(event){
         console.log(event);
@@ -37,12 +37,14 @@
         };
         items.push(item);
         items=items;
+        localStorage.setItem('items',JSON.stringify(items));
 
     }
     function onDeleteItem(event){
         const idx=items.findIndex(i=>i.id===event.detail.id);
         items.splice(idx, 1);
         items=items;
+        localStorage.setItem('items',JSON.stringify(items));
     }
 </script>
 

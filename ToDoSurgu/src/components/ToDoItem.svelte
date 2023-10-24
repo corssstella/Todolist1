@@ -8,9 +8,15 @@
 </script>
 
 <div class="todo-item" class:todo-item_done={isDone}>
-    <input class="todo-item_check" type="checkbox" on:change={dispatch('change',{id})} checked={isDone}/>
+    <input 
+    class="todo-item_check" 
+    type="checkbox" 
+    on:change={dispatch('change',{id})} 
+    checked={isDone}
+    />
     <span class="todo-item_text">{text}</span>
-    <button class="todo-item_btn">Del</button>
+    <button class="todo-item_btn" 
+    on:click={dispatch('remove',{id})}>Del</button>
 </div>
 
 <style>
@@ -29,14 +35,17 @@
         text-decoration: line-through;
     }
     .todo-item_check{
+		width: 20px;
+		height: 20px;
+	}
 
-    }
+
     .todo-item_text{
         flex-grow: 1;
     }
     .todo-item_btn{
         border: none;
-        background-color: rgb(191, 118, 92);
+        background-color: rgb(137, 185, 247);
         border-radius: 10px;
         padding: 10px;
         min-width: 100px;
